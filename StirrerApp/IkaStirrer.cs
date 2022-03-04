@@ -19,7 +19,7 @@ namespace StirrerApp
                     throw new ArgumentOutOfRangeException(nameof(Rpm));
                 }
                 _rpm = value;
-                Console.WriteLine($"{{Name}}: Rpm set to {_rpm}");
+                Console.WriteLine($"{Name}: Rpm set to {_rpm}");
             }
         }
 
