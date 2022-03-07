@@ -7,7 +7,7 @@ namespace StirrerApp
         private int _rpm;
 
         protected abstract bool CheckRpm(int value);
-        public string Name { get; protected set; }
+        public string Name { get; protected init; }
 
         public int Rpm
         {
