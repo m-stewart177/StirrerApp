@@ -1,9 +1,28 @@
-﻿namespace StirrerApp
+﻿using System;
+
+namespace StirrerApp
 {
-    public class BaseStirrer
+    public abstract class BaseStirrer
     {
+        private int _rpm;
+
+        protected abstract bool CheckRpm(int value);
         public string Name { get; protected set; }
-        virtual public int Rpm { get; set; }
+
+        public int Rpm
+        {
+            get => _rpm;
+            set
+            {
+                if (!CheckRpm(value))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(Rpm));
+                }
+                _rpm = value;
+                Console.WriteLine($"{Name}: RPM changed to {value}");
+            }
+        }
+
         public StirrerMode Mode { get; set; }
     }
 }
