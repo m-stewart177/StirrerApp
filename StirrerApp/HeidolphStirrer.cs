@@ -1,23 +1,23 @@
-﻿using System;
-
-namespace StirrerApp
+﻿namespace StirrerApp
 {
     public class HeidolphStirrer : BaseStirrer
     {
-        private const int MinRpm = 200;
-        private const int MaxRpm = 2000;
-        private const int DefaultRpm = MinRpm;
+        private const int DefaultRpm = 200;
+
+        private IConstraint _rpmConstraint;
         
-        public HeidolphStirrer(string name, StirrerMode mode = StirrerMode.Standby)
+        public HeidolphStirrer(string name, IConstraint rpmConstraint, StirrerMode mode = StirrerMode.Standby)
         {
+            _rpmConstraint = rpmConstraint;
             Name = name;
             Mode = mode;
-            Rpm = DefaultRpm;
+            var rpmRange = rpmConstraint as IRange;
+            Rpm = rpmRange?.Min ?? DefaultRpm;
         }
 
         protected override bool CheckRpm(int value)
         {
-            return value is >= MinRpm and <= MaxRpm;
+            return _rpmConstraint.CheckValue(value);
         }
     }
 }

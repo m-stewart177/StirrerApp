@@ -4,18 +4,23 @@
     {
         private const int MinRpm = 300;
         private const int MaxRpm = 1500;
-        private const int DefaultRpm = MinRpm;
+        private const int DefaultRpm = 300;
+
+        private IConstraint _rpmConstraint;
         
-        public IkaStirrer(string name, StirrerMode mode = StirrerMode.Standby)
+        public IkaStirrer(string name, IConstraint rpmConstraint, StirrerMode mode = StirrerMode.Standby)
         {
+            _rpmConstraint = rpmConstraint;
             Name = name;
             Mode = mode;
-            Rpm = DefaultRpm;
+
+            var rpmRange = rpmConstraint as IRange;
+            Rpm = rpmRange?.Min ?? DefaultRpm;
         }
 
         protected override bool CheckRpm(int value)
         {
-            return value is >= MinRpm and <= MaxRpm;
+            return _rpmConstraint.CheckValue(value);
         }
     }
 }

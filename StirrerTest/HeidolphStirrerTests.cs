@@ -7,27 +7,31 @@ namespace StirrerTest
 {
     public class HeidolphStirrerTests
     {
-        private const string testName = "HeidolphTest";
+        private const string TestName = "HeidolphTest";
+        private readonly RangeConstraint _rangeConstraint = new(200, 2000);
+        
         [Fact]
         public void NameShouldBeSetOnCreation()
         {
 
-            var testStirrer = new HeidolphStirrer(testName);
-            Assert.Equal(testName, testStirrer.Name);
+            var testStirrer = new HeidolphStirrer(TestName, _rangeConstraint);
+            Assert.Equal(TestName, testStirrer.Name);
         }
 
         [Fact]
         public void ModeCanBeSetOnCreation()
         {
-            var testStirrer = new HeidolphStirrer(testName, StirrerMode.Connected);
+            var testStirrer = new HeidolphStirrer(TestName, _rangeConstraint, StirrerMode.Connected);
             Assert.Equal(StirrerMode.Connected, testStirrer.Mode);
         }
 
         [Fact]
         public void WhenRpmInRangeShouldBeAbleToSetValue()
         {
-            var testStirrer = new HeidolphStirrer(testName);
-            testStirrer.Rpm = 1000;
+            var testStirrer = new HeidolphStirrer(TestName, _rangeConstraint)
+            {
+                Rpm = 1000
+            };
             Assert.Equal(1000, testStirrer.Rpm);
         }
 
@@ -36,8 +40,10 @@ namespace StirrerTest
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                var testStirrer = new HeidolphStirrer(testName);
-                testStirrer.Rpm = 100;
+                var testStirrer = new HeidolphStirrer(TestName, _rangeConstraint)
+                {
+                    Rpm = 100
+                };
             });
         }
 
@@ -46,8 +52,10 @@ namespace StirrerTest
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                var testStripper = new HeidolphStirrer(testName);
-                testStripper.Rpm = 3000;
+                var testStripper = new HeidolphStirrer(TestName, _rangeConstraint)
+                {
+                    Rpm = 3000
+                };
             });
         }
     }

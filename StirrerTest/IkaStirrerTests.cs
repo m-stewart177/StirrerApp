@@ -7,27 +7,31 @@ namespace StirrerTest
 {
     public class IkaStirrerTests
     {
-        private const string testName = "IkaStirrerTest";
+        private const string TestName = "IkaStirrerTest";
+        private readonly RangeConstraint _rangeConstraint = new(300, 1500);
+
         [Fact]
         public void NameShouldBeSetOnCreation()
         {
 
-            var testStirrer = new IkaStirrer(testName);
-            Assert.Equal(testName, testStirrer.Name);
+            var testStirrer = new IkaStirrer(TestName, _rangeConstraint);
+            Assert.Equal(TestName, testStirrer.Name);
         }
 
         [Fact]
         public void ModeCanBeSetOnCreation()
         {
-            var testStirrer = new IkaStirrer(testName, StirrerMode.Connected);
+            var testStirrer = new IkaStirrer(TestName, _rangeConstraint, StirrerMode.Connected);
             Assert.Equal(StirrerMode.Connected, testStirrer.Mode);
         }
         
         [Fact]
         public void WhenRpmInRangeShouldBeAbleToSetValue()
         {
-            var testStirrer = new IkaStirrer(testName);
-            testStirrer.Rpm = 1000;
+            var testStirrer = new IkaStirrer(TestName, _rangeConstraint)
+            {
+                Rpm = 1000
+            };
             Assert.Equal(1000, testStirrer.Rpm);
         }
 
@@ -36,8 +40,10 @@ namespace StirrerTest
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                var testStirrer = new IkaStirrer(testName);
-                testStirrer.Rpm = 100;
+                var testStirrer = new IkaStirrer(TestName, _rangeConstraint)
+                {
+                    Rpm = 100
+                };
             });
         }
 
@@ -46,8 +52,10 @@ namespace StirrerTest
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                var testStripper = new IkaStirrer(testName);
-                testStripper.Rpm = 3000;
+                var testStripper = new IkaStirrer(TestName, _rangeConstraint)
+                {
+                    Rpm = 3000
+                };
             });
         }
 

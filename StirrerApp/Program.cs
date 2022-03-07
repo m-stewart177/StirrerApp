@@ -8,8 +8,9 @@ namespace StirrerApp
         {
             Console.WriteLine("Stirrer Demo");
 
-            var ikaStirrer = new IkaStirrer("Ika stirrer");
-            var heidolphStirrer = new HeidolphStirrer("Heidolph Stirrer");
+            // Ranges could be read from a configuration file.
+            var ikaStirrer = new IkaStirrer("Ika stirrer", new RangeConstraint(300, 1500));
+            var heidolphStirrer = new HeidolphStirrer("Heidolph Stirrer", new RangeConstraint(200, 2000));
 
             ikaStirrer.Rpm = 750;
             heidolphStirrer.Rpm = 1500;
